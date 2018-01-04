@@ -1,0 +1,3 @@
+2017-12-19 14:12:19,933 : /home/agoel/object_detection/Beta/dataset/readers/COCOReader.py : COCOReader : Opening /data/stars/user/uujjwal/datasets/generic-detection/mscoco/annotations/instances_train2014.json.
+2017-12-19 14:12:48,158 : /home/agoel/object_detection/Beta/utils/timing.py : timing : function [_readcocoannotations] finished in 28224 ms.
+2017-12-19 14:12:48,158 : /home/agoel/object_detection/Beta/dataset/readers/COCOReader.py : COCOReader : Total size of dataset = 185316
