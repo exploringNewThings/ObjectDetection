@@ -22,7 +22,8 @@ import torchvision.models as models
 from networks.inception import inception_v3
 from networks.SampleNetwork import SampleNetwork
 from criterion.BaseLoss import BaseLoss
-from dataset import InputDataset
+#from dataset import InputDataset
+from tests import InputDataset_test as InputDataset
 from dataset.readers import COCOReader
 from transforms import individualfliphorizontal, imagefliphorizontal, brightness
 from losses.CustomLoss import BoundingBoxLoss
@@ -83,7 +84,9 @@ def main():
         model = inception_v3()
     '''
     model = SampleNetwork()
-    model.double().cuda()
+    model = nn.DataParallel(model)
+    model = model.cuda()
+    #model.double().cuda()
     #model = torch.nn.parallel.DistributedDataParallel(model)
     
 
@@ -210,13 +213,16 @@ def train(train_loader, model, criterion, optimizer, epoch):
 
         input_image_batch = sample_batched['image']
         bbox_batch = sample_batched['annotations']
+        #print(len(input_image_batch))
         #print(bbox_batch)
         #print(bbox_batch[0])
         #print(bbox_batch[0][0])
         filename_batch = sample_batched['file_name']
         
+        input_type = type(input_image_batch[0])
+        print(input_type)
         target = bbox_batch#.cuda(async=True)
-        input_var = torch.autograd.Variable(input_image_batch).cuda()
+        input_var = input_image_batch.cuda()#torch.autograd.Variable(torch.IntTensor(input_image_batch)).cuda()
         target_var = target#torch.autograd.Variable(target)
 
         # compute output
